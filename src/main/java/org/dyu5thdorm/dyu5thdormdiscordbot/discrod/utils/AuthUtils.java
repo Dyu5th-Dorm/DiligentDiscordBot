@@ -78,8 +78,10 @@ public class AuthUtils {
         }
 
         roleOperation.addRoleToMemberByFloor(member.getGuild(), member, bedId);
+        livingRecordFound.map(LivingRecord::getStudent)
+                .map(org.dyu5thdorm.dyu5thdormdiscordbot.spring.models.Student::getCitizenship)
+                .ifPresent(citizenship -> roleOperation.addRoleByCitizenship(member.getGuild(), member, citizenship));
 
         return AuthErrorType.NONE;
     }
 }
-

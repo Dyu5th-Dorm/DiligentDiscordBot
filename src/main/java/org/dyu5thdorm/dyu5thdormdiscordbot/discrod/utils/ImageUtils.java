@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Base64;
 
 /**
@@ -45,6 +46,14 @@ public class ImageUtils {
                         "%s.png", studentId.toUpperCase()
                 )
         );
+    }
+
+    public Optional<FileUpload> tryGetStudentImage(@NotNull String studentId) {
+        try {
+            return Optional.of(getStudentImage(studentId));
+        } catch (IOException exception) {
+            return Optional.empty();
+        }
     }
 
     /**

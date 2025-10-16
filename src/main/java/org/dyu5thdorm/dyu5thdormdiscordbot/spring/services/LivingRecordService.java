@@ -64,6 +64,9 @@ public class LivingRecordService {
                 "5" + floor.toString()
         );
     }
-}
 
+    public Set<String> findDistinctCitizenshipsForCurrentTerm() {
+        return livingRecordRepository.findDistinctCitizenshipsBySchoolTimestamp(schoolTimestamp);
+    }
+}
 

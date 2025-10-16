@@ -62,7 +62,13 @@ public class FloorRoleCorBtn extends ListenerAdapter {
             int floor = roleOperation.getFloorByBedId(record.get().getBed().getBedId());
             String correctRoleId = roleOperation.getRoleIdByFloor(floor);
             Role role = thisGuild.getRoleById(correctRoleId);
-            if (role == null) return;
+            if (role == null) {
+                event.getHook()
+                     .sendMessage(String.format("找不到樓層角色 <@&%s>，請先建立後再試。", correctRoleId))
+                     .setEphemeral(true)
+                     .queue();
+                continue;
+            }
             if (!member.getRoles().contains(role)) {
                 roleOperation.removeAllFloorRoles(thisGuild, member);
                 thisGuild.addRoleToMember(member, role).queue();

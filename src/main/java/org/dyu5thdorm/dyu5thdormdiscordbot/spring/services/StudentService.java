@@ -46,4 +46,8 @@ public class StudentService {
     public Set<Student> findAllByStudentId(String studentId) {
         return studentRepository.findAllByStudentId(studentId);
     }
+
+    public Set<String> findDistinctCitizenships() {
+        return studentRepository.findDistinctCitizenships();
+    }
 }

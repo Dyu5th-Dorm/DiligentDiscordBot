@@ -66,4 +66,72 @@ public class ChannelIdSet {
     String machineRepairment;
     @Value("${channel.repairment.water}")
     String waterDispenserRepairment;
+
+    public String findChannelId(String key) {
+        return switch (key) {
+            case "channel.auth" -> auth;
+            case "channel.auth-logger" -> authLogger;
+            case "channel.announcement" -> announcement;
+            case "channel.leave" -> leave;
+            case "channel.cadre-button" -> cadreButton;
+            case "channel.repair" -> repair;
+            case "channel.took-coin" -> tookCoin;
+            case "channel.admin.operation" -> adminOperation;
+            case "channel.rules" -> rules;
+            case "channel.request-leave" -> reqLev;
+            case "channel.request-leave-cadre" -> reqLevCadre;
+            case "channel.took-coin-cadre" -> tookCoinCadre;
+            case "channel.took-coin-get-back-cadre" -> tookCoinGetBackCadre;
+            case "channel.floor-one" -> floorOne;
+            case "channel.floor-two" -> floorTwo;
+            case "channel.floor-three" -> floorThree;
+            case "channel.floor-four" -> floorFour;
+            case "channel.floor-five" -> floorFive;
+            case "channel.floor-six" -> floorSix;
+            case "channel.public" -> publicChannel;
+            case "channel.lottery" -> lottery;
+            case "channel.vote" -> vote;
+            case "channel.leader" -> leader;
+            case "channel.return-by-firm" -> returnByFirm;
+            case "channel.repairment.normal" -> normalRepairment;
+            case "channel.repairment.vending" -> vendingRepairment;
+            case "channel.repairment.machine" -> machineRepairment;
+            case "channel.repairment.water" -> waterDispenserRepairment;
+            default -> throw new IllegalArgumentException("Unknown channel key: " + key);
+        };
+    }
+
+    public void overrideChannelId(String key, String value) {
+        switch (key) {
+            case "channel.auth" -> auth = value;
+            case "channel.auth-logger" -> authLogger = value;
+            case "channel.announcement" -> announcement = value;
+            case "channel.leave" -> leave = value;
+            case "channel.cadre-button" -> cadreButton = value;
+            case "channel.repair" -> repair = value;
+            case "channel.took-coin" -> tookCoin = value;
+            case "channel.admin.operation" -> adminOperation = value;
+            case "channel.rules" -> rules = value;
+            case "channel.request-leave" -> reqLev = value;
+            case "channel.request-leave-cadre" -> reqLevCadre = value;
+            case "channel.took-coin-cadre" -> tookCoinCadre = value;
+            case "channel.took-coin-get-back-cadre" -> tookCoinGetBackCadre = value;
+            case "channel.floor-one" -> floorOne = value;
+            case "channel.floor-two" -> floorTwo = value;
+            case "channel.floor-three" -> floorThree = value;
+            case "channel.floor-four" -> floorFour = value;
+            case "channel.floor-five" -> floorFive = value;
+            case "channel.floor-six" -> floorSix = value;
+            case "channel.public" -> publicChannel = value;
+            case "channel.lottery" -> lottery = value;
+            case "channel.vote" -> vote = value;
+            case "channel.leader" -> leader = value;
+            case "channel.return-by-firm" -> returnByFirm = value;
+            case "channel.repairment.normal" -> normalRepairment = value;
+            case "channel.repairment.vending" -> vendingRepairment = value;
+            case "channel.repairment.machine" -> machineRepairment = value;
+            case "channel.repairment.water" -> waterDispenserRepairment = value;
+            default -> throw new IllegalArgumentException("Unknown channel key: " + key);
+        }
+    }
 }

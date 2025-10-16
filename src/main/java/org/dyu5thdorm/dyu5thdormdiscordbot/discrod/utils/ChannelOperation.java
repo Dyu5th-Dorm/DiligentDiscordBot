@@ -8,6 +8,8 @@ import org.dyu5thdorm.dyu5thdormdiscordbot.discrod.Identity.ChannelIdSet;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -21,19 +23,28 @@ public class ChannelOperation {
 
     @PostConstruct
     void init() {
-        floorChannelMap = Map.of(
-                1, channelIdSet.getFloorOne(),
-                2, channelIdSet.getFloorTwo(),
-                3, channelIdSet.getFloorThree(),
-                4, channelIdSet.getFloorFour(),
-                5, channelIdSet.getFloorFive(),
-                6, channelIdSet.getFloorSix()
-        );
+        refreshFloorChannelMap();
     }
 
     public void deleteAllMessage(@NotNull TextChannel textChannel, int limit) {
         textChannel.getHistoryFromBeginning(limit).complete().getRetrievedHistory().forEach(
                 message -> message.delete().queue()
         );
+    }
+
+    public void refreshFloorChannelMap() {
+        Map<Integer, String> map = new HashMap<>();
+        putIfPresent(map, 1, channelIdSet.getFloorOne());
+        putIfPresent(map, 2, channelIdSet.getFloorTwo());
+        putIfPresent(map, 3, channelIdSet.getFloorThree());
+        putIfPresent(map, 4, channelIdSet.getFloorFour());
+        putIfPresent(map, 5, channelIdSet.getFloorFive());
+        putIfPresent(map, 6, channelIdSet.getFloorSix());
+        floorChannelMap = Collections.unmodifiableMap(map);
+    }
+
+    private void putIfPresent(Map<Integer, String> target, int floor, String channelId) {
+        if (channelId == null || channelId.isBlank()) return;
+        target.put(floor, channelId);
     }
 }

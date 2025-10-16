@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.dyu5thdorm</groupId>
     <artifactId>Dyu5thDormDiscordBot</artifactId>
-    <version>1.12.2</version>
+    <version>1.13.0</version>
     <name>Dyu5thDormDiscordBot</name>
     <description>Dyu5thDormDiscordBot</description>
     <properties>

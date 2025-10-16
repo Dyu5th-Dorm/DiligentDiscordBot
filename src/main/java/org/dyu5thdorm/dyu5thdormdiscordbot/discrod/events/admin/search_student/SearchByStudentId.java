@@ -1,7 +1,6 @@
 package org.dyu5thdorm.dyu5thdormdiscordbot.discrod.events.admin.search_student;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -56,7 +55,6 @@ public class SearchByStudentId extends ListenerAdapter {
         ).queue();
     }
 
-    @SneakyThrows
     @Override
     public void onModalInteraction(ModalInteractionEvent event) {
         String eventModalId = event.getModalId();
@@ -92,11 +90,12 @@ public class SearchByStudentId extends ListenerAdapter {
             DiscordLink discordLink = discordLinkService.findByStudentId(
                     livingRecord.getStudent().getStudentId()
             );
-            event.getHook().sendMessageEmbeds(
+            var action = event.getHook().sendMessageEmbeds(
                     embedGenerator.infoFromStudentId(livingRecord, discordLink).build()
-            ).addFiles(
-                    imageUtils.getStudentImage(livingRecord.getStudent().getStudentId())
-            ).setEphemeral(true).queue();
+            );
+            imageUtils.tryGetStudentImage(livingRecord.getStudent().getStudentId())
+                    .ifPresent(action::addFiles);
+            action.setEphemeral(true).queue();
         }
 
         event.reply("查詢成功").setEphemeral(true).queue();

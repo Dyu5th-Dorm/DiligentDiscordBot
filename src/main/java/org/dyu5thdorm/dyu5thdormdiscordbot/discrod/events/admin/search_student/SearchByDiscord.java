@@ -1,7 +1,6 @@
 package org.dyu5thdorm.dyu5thdormdiscordbot.discrod.events.admin.search_student;
 
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -49,7 +48,6 @@ public class SearchByDiscord extends ListenerAdapter {
         ).setEphemeral(true).queue();
     }
 
-    @SneakyThrows
     @Override
     public void onEntitySelectInteraction(@NotNull EntitySelectInteractionEvent event) {
         String eventMenuId = event.getSelectMenu().getId();
@@ -67,16 +65,17 @@ public class SearchByDiscord extends ListenerAdapter {
                                 "> <@%s> 查無結果", userId
                         )
                 ).setEphemeral(true).queue();
-                return;
+                continue;
             }
             EmbedBuilder embedBuilder = embedGenerator.infoFromDiscord(livingRecord.get(), userId);
-            event.getHook().sendMessage(
+            var action = event.getHook().sendMessage(
                     String.format("<@%s>", userId)
             ).addEmbeds(
                     embedBuilder.build()
-            ).addFiles(
-                    imageUtils.getStudentImage(livingRecord.get().getStudent().getStudentId())
-            ).setEphemeral(true).queue();
+            );
+            imageUtils.tryGetStudentImage(livingRecord.get().getStudent().getStudentId())
+                    .ifPresent(action::addFiles);
+            action.setEphemeral(true).queue();
         }
     }
 }
